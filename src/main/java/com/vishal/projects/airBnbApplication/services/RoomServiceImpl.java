@@ -6,6 +6,7 @@ import com.vishal.projects.airBnbApplication.entities.Room;
 import com.vishal.projects.airBnbApplication.exception.ResourceNotFoundException;
 import com.vishal.projects.airBnbApplication.repositories.HotelRepository;
 import com.vishal.projects.airBnbApplication.repositories.RoomRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -64,6 +65,7 @@ public class RoomServiceImpl implements RoomService{
         return modelMapper.map(room, RoomDto.class);
     }
 
+    @Transactional
     @Override
     public void deleteRoomById(Long roomId) {
         log.info("Deleting the room with id: {}", roomId);
@@ -73,9 +75,8 @@ public class RoomServiceImpl implements RoomService{
                 .findById(roomId)
                 .orElseThrow(() -> new ResourceNotFoundException("Room not found with the id : "+ roomId));
 
+        inventoryService.deleteAllInventories(room);
         roomRepository.deleteById(roomId);
-
-        inventoryService.deleteFutureInventories(room);
 
     }
 }

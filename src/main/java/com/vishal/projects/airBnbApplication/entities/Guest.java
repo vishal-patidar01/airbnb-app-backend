@@ -29,6 +29,4 @@ public class Guest {
 
     private Integer age;
 
-    @ManyToMany(mappedBy = "guests")
-    private Set<Booking> bookings;
 }

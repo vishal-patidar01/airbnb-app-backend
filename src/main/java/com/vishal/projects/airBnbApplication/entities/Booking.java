@@ -27,7 +27,7 @@ public class Booking {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id", nullable = false)
-    private Room room_id;
+    private Room room;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
@@ -48,9 +48,9 @@ public class Booking {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "payment_id")
-    private Payment payment;
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "payment_id")
+//    private Payment payment;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
